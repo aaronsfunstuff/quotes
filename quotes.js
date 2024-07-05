@@ -82,8 +82,23 @@ document.addEventListener('DOMContentLoaded', function () {
         "The only place where success comes before work is in the dictionary. - Vidal Sassoon",
         "Success is not final, failure is not fatal", ];
 
-    const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
-    const quote = quotes[dayOfYear % quotes.length];
+    function getDailyQuote() {
+        const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+        return quotes[dayOfYear % quotes.length];
+    }
 
-    document.getElementById('quote').innerText = quote;
+    function getRandomQuote() {
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        return quotes[randomIndex];
+    }
+
+    function displayQuote(quote) {
+        document.getElementById('quote').innerText = quote;
+    }
+
+    displayQuote(getDailyQuote());
+
+    document.getElementById('randomQuoteBtn').addEventListener('click', function () {
+        displayQuote(getRandomQuote());
+    });
 });
