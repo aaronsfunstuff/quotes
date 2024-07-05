@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
         "The only place where success comes before work is in the dictionary. - Vidal Sassoon",
         "Success is not final, failure is not fatal", ];
 
-    function getDailyQuote() {
+     function getDailyQuote() {
         const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
         return quotes[dayOfYear % quotes.length];
     }
@@ -96,9 +96,36 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('quote').innerText = quote;
     }
 
+    function saveQuoteToFavorites(quote) {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        if (!favorites.includes(quote)) {
+            favorites.push(quote);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            displayFavorites();
+        } else {
+            alert("This quote is already in your favorites!");
+        }
+    }
+
+    function displayFavorites() {
+        const favoritesList = document.getElementById('favoritesList');
+        favoritesList.innerHTML = '';
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        favorites.forEach(quote => {
+            const li = document.createElement('li');
+            li.innerText = quote;
+            favoritesList.appendChild(li);
+        });
+    }
+
     displayQuote(getDailyQuote());
+    displayFavorites();
 
     document.getElementById('randomQuoteBtn').addEventListener('click', function () {
         displayQuote(getRandomQuote());
+    });
+
+    document.getElementById('saveQuoteBtn').addEventListener('click', function () {
+        saveQuoteToFavorites(document.getElementById('quote').innerText);
     });
 });
