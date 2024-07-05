@@ -80,4 +80,10 @@ document.addEventListener('DOMContentLoaded', function () {
         "Don’t be afraid to give up the good to go for the great. - John D. Rockefeller",
         "Success usually comes to those who are too busy to be looking for it. - Henry David Thoreau",
         "The only place where success comes before work is in the dictionary. - Vidal Sassoon",
-        "Success is not final, failure is not fatal",
+        "Success is not final, failure is not fatal", ];
+
+    const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+    const quote = quotes[dayOfYear % quotes.length];
+
+    document.getElementById('quote').innerText = quote;
+});
